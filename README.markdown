@@ -1,8 +1,14 @@
 zcarousel
 =========
 A crossfading carousel jQuery plugin.
-Requires spin.js: ``http://fgnass.github.com/spin.js/``
+
+Requires [spin.js](http://fgnass.github.com/spin.js/).
+
 Images are stretched to fit the width of the carousel, and vertically centered in that space. The 'offset' option adds a vertical offset.
+
+Live Demo
+=========
+[http://zephod.github.com/jquery.zcarousel]()
 
 Example 1: Javascript
 =====================
@@ -20,8 +26,8 @@ Example 1: Javascript
 
 Example 2: Pure HTML
 ====================
-Create a <div id="zcarousel"> on the page to hold the carousel. Elsewhere, create 
-a hidden <table id="zcarousel-data"> containing the data array.
+Create a ``<div id="zcarousel">`` on the page to hold the carousel. Elsewhere, create 
+a hidden ``<table id="zcarousel-data">`` containing the data array.
 
     <div id="zcarousel" style="width: 500px; height: 200px;"></div>
     <table id="zcarousel-data" style="display: none;">
