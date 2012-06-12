@@ -204,7 +204,7 @@ jQuery.fn.zcarousel = function(dataArray) {
   var current = 0;
   function clickNav(e) {
     e.preventDefault();
-    var offset = $(e.target).hasClass('left') ? -1 : 1;
+    var offset = e.target==linkPrev[0] ? -1 : 1;
     current = (current + offset + dataArray.length) % dataArray.length;
     setCarousel(dataArray[current]);
   }
