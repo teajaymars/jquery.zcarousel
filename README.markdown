@@ -8,7 +8,7 @@ Images are stretched to fit the width of the carousel, and vertically centered i
 
 Live Demo
 =========
-[http://zephod.github.com/jquery.zcarousel]()
+[http://zephod.github.com/jquery.zcarousel](http://zephod.github.com/jquery.zcarousel)
 
 Example 1: Javascript
 =====================
