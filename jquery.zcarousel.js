@@ -7,8 +7,8 @@
    Images are stretched to fit the width of the carousel, and vertically
    centered in that space. The 'offset' option adds a vertical offset.
 
-   Example 1: Javascript
-   =====================
+   usage
+   =====
    $('#carousel-div').zcarousel(
     [
       { caption: 'Here is the first image.',         
@@ -20,25 +20,6 @@
         offset: '0'    
       }
     ] );
-
-   Example 2: Pure HTML
-   ====================
-   // Create a <div id="zcarousel"> on the page to hold the carousel. Elsewhere, create 
-   // a hidden <table id="zcarousel-data"> containing the data array.
-   
-   <div id="zcarousel" style="width: 500px; height: 200px;"></div>
-   <table id="zcarousel-data" style="display: none;">
-     <tr>
-       <td>http://farm7.staticflickr.com/6102/6262968724_9c5b2be4b6_b_d.jpg</td>
-       <td>-50px</td>
-       <td>Here is my caption for the first image, which was shifted up the page by 50 pixels.</td>
-     </tr>
-     <tr>
-       <td>http://farm8.staticflickr.com/7004/6554801395_476cf878b7_o_d.png</td>
-       <td>0</td>
-       <td>Here is another interesting caption.</td>
-     </tr>
-   </table>
  */
 
 jQuery.fn.zcarousel = function(dataArray) {
@@ -61,54 +42,11 @@ jQuery.fn.zcarousel = function(dataArray) {
 
   // Build the DOM
   var carousel = this;
-  var captionBox = $('<div/>').appendTo(carousel);
-  var linkNext = $('<a href="#"/>').html('›').appendTo(carousel);
-  var linkPrev = $('<a href="#"/>').html('‹').appendTo(carousel);
+  carousel.addClass('zcarousel-main');
+  var linkPrev = $('<a href="#" class="zcarousel-nav zcarousel-nav-left" />').html('‹').appendTo(carousel);
+  var linkNext = $('<a href="#" class="zcarousel-nav zcarousel-nav-right"/>').html('›').appendTo(carousel);
   var spinner = null;
-  carousel.css({
-    'position'   : 'relative',
-    'color'      : '#fff',
-    'overflow'   : 'hidden'
-  });
-  captionBox.css({
-    'position'   : 'absolute',
-    'left'       : '0',
-    'right'      : '0',
-    'bottom'     : '0',
-    'background' : 'rgba(0,0,0,0.75)',
-    'overflow'   : 'hidden',
-    'padding'    : '10px 15px',
-    'opacity'    : 0,
-    'height'     : 0
-  });
-  linkNext.add(linkPrev).css({
-    'position' : 'absolute',
-    'top' : '40%',
-    'left' : '15px',
-    'width' : '40px',
-    'height' : '40px',
-    'margin-top' : '-20px',
-    'font-size' : '60px',
-    'font-weight' : '100',
-    'line-height' : '30px',
-    'color' : '#ffffff',
-    'text-align' : 'center',
-    'background' : '#222222',
-    'border' : '3px solid #ffffff',
-    '-webkit-border-radius' : '23px',
-    '-moz-border-radius' : '23px',
-    'border-radius' : '23px',
-    'opacity' : '0.5',
-    'filter' : 'alpha(opacity=50)',
-    'text-decoration' : 'none'
-  }).hover(
-      function(e) { $(e.target).css({opacity:1}); },
-      function(e) { $(e.target).stop().animate({opacity:0.5}, 200); }
-  );
-  linkNext.css({
-    'left'  : 'auto',
-    'right' : '15px'
-  });
+  var captionBox = $('<div class="zcarousel-caption"/>').appendTo(carousel);
 
   // Called when an image has downloaded
   function imgLoaded(e) {
@@ -214,28 +152,4 @@ jQuery.fn.zcarousel = function(dataArray) {
   // Set up initial state
   setCarousel(dataArray[current]);
 };
-
-
-$(function() {
-  // Detect the required page elements.
-  var dataTable = $('#zcarousel-data');
-  var carouselDiv = $('#zcarousel');
-  if (dataTable.length==0 || carouselDiv.length==0) {
-    // There is no carousel on this page.
-    return;
-  }
-  // Parse the data table
-  var dataArray = [];
-  $.each(dataTable.find('tr'), function(i,row) {
-    // Pull a JSON object out of each row
-    var td = $(row).find('td');
-    var obj = {
-      url:     $(td[0]).html(),
-      offset:  $(td[1]).html(),
-      caption: $(td[2]).html()
-    };
-    dataArray.push(obj);
-  });
-  carouselDiv.zcarousel(dataArray);
-});
 
