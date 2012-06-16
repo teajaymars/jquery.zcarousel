@@ -24,6 +24,14 @@
   line-height: 18px;
   z-index: 1;
 }
+.zcarousel-caption a,
+.zcarousel-caption a:visited {
+  color: #4cc2ac;
+  text-decoration: underline;
+}
+.zcarousel-caption a:hover {
+  color: #57e4ca;
+}
 .zcarousel-nav {
   position : absolute;
   top : 40%;
