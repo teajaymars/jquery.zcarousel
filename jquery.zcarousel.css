@@ -2,11 +2,11 @@
   position:relative;
   color: #fff;
   overflow: hidden;
+  margin-bottom: 20px;
 }
 .zcarousel-image {
   position : absolute;
   display  : none;
-  z-index  : -1;
   left     : 0;
   top      : 0;
 }
@@ -22,6 +22,7 @@
   opacity    : 0;
   height     : 0;
   line-height: 18px;
+  z-index: 1;
 }
 .zcarousel-nav {
   position : absolute;
@@ -41,7 +42,8 @@
   border-radius : 23px;
   opacity : 0.5;
   filter : alpha(opacity=50);
-  text-decoration : none
+  text-decoration : none;
+  z-index: 1;
 }
 .zcarousel-nav:hover {
   opacity: 1.0;
