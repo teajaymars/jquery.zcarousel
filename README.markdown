@@ -10,8 +10,8 @@ Live Demo
 =========
 [http://zephod.github.com/jquery.zcarousel](http://zephod.github.com/jquery.zcarousel)
 
-Example 1: Javascript
-=====================
+Usage
+=====
     $('#carousel-div').zcarousel(
     [
       { caption: 'Here is the first image.',         
@@ -23,22 +23,3 @@ Example 1: Javascript
         offset: '0'    
       }
     ] );
-
-Example 2: Pure HTML
-====================
-Create a ``<div id="zcarousel">`` on the page to hold the carousel. Elsewhere, create 
-a hidden ``<table id="zcarousel-data">`` containing the data array.
-
-    <div id="zcarousel" style="width: 500px; height: 200px;"></div>
-    <table id="zcarousel-data" style="display: none;">
-     <tr>
-       <td>http://farm7.staticflickr.com/6102/6262968724_9c5b2be4b6_b_d.jpg</td>
-       <td>-50px</td>
-       <td>Here is my caption for the first image, which was shifted up the page by 50 pixels.</td>
-     </tr>
-     <tr>
-       <td>http://farm8.staticflickr.com/7004/6554801395_476cf878b7_o_d.png</td>
-       <td>0</td>
-       <td>Here is another interesting caption.</td>
-     </tr>
-    </table>
