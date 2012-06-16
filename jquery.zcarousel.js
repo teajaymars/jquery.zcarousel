@@ -49,8 +49,8 @@ jQuery.fn.zcarousel = function(dataArray) {
   var captionBox = $('<div class="zcarousel-caption"/>').appendTo(carousel);
 
   // Called when an image has downloaded
-  function imgLoaded(e) {
-    var img = $(e.target);
+  function imgLoaded(obj) {
+    var img = obj.domElement;
 
     // Set the aspect ratio
     var w = img.width();
@@ -62,25 +62,32 @@ jQuery.fn.zcarousel = function(dataArray) {
       'width'  : carousel.width(),
       'height' : Math.round(carousel.width() * (1/fRatio))
     });
-    
+
+    // Vertically center the image
+    var vOffset = ((carousel.height() - img.height()) / 2) - parseInt(obj.offset);
+    img.css('top',vOffset+'px');
+    fadeToImage(img);
+  }
+
+  function fadeToImage(img) {
+    // Move image to the front
+    img.hide();
+    img.remove().appendTo(carousel);
+    // Kill spinner
     if (spinner) {
       spinner.stop();
       spinner = null;
     }
+    // All future spinners need to be white
     spinner_settings.color = '#fff';
-
-    // Vertically center the image
-    var vOffset = Math.min(0, (carousel.height() - img.height()) / 2);
-    img.css('top',vOffset+'px');
-
+    // Trigger animations
     img.fadeIn('fast', function() {
-      $('.carousel-image').hide();
-      img.show();
+      $('.zcarousel-image').not(img).hide();
     });
   };
 
   // Set the carousel state
-  function setCarousel(obj) {
+  function navigateToImage(obj) {
     var oldCaption = captionBox.find('div');
     var caption = $('<div/>').html(obj.caption).appendTo(captionBox);
     var targetHeight = caption.height();
@@ -108,35 +115,27 @@ jQuery.fn.zcarousel = function(dataArray) {
         heightSpeed 
     );
 
-    // Fade out old items
+    // Images might be cached in the document
     if (obj.domElement) {
-      obj.domElement.hide();
-      obj.domElement.remove().appendTo(carousel);
-      obj.domElement.fadeIn('fast', function() {
-        $('.carousel-image').hide();
-        obj.domElement.show();
-      });
-      if (spinner) {
-        spinner.stop();
-        spinner = null;
-      }
+      fadeToImage(obj.domElement);
     }
     else {
       if (!spinner) spinner = new Spinner(spinner_settings).spin(carousel[0]);
       // Add the new image
-      var img = $('<img class="carousel-image"/>');
-      img.css({
-        'position' : 'absolute',
-        'z-index'  : -1,
-        'left'     : 0,
-        'top'      : 0,
-        'display'  : 'none'
-      });
-      img.load(imgLoaded);
+      var img = $('<img class="zcarousel-image"/>');
+      img.load( function(){imgLoaded(obj)} );
       img.attr('src',obj.url).appendTo(carousel);
       obj.domElement = img;
     }
   }
+
+  // Auto-scroll
+  function onAutoScroll() {
+    current = (current+1) % dataArray.length;
+    navigateToImage(dataArray[current]);
+  }
+  var autoScrollTime = 12000;
+  var autoScroll = window.setInterval(onAutoScroll, autoScrollTime);
 
   // Handle state changes
   var current = 0;
@@ -144,12 +143,13 @@ jQuery.fn.zcarousel = function(dataArray) {
     e.preventDefault();
     var offset = e.target==linkPrev[0] ? -1 : 1;
     current = (current + offset + dataArray.length) % dataArray.length;
-    setCarousel(dataArray[current]);
+    navigateToImage(dataArray[current]);
+    window.clearInterval(autoScroll);
   }
   linkNext.click(clickNav);
   linkPrev.click(clickNav);
 
   // Set up initial state
-  setCarousel(dataArray[current]);
+  navigateToImage(dataArray[current]);
 };
 

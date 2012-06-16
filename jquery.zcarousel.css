@@ -3,6 +3,13 @@
   color: #fff;
   overflow: hidden;
 }
+.zcarousel-image {
+  position : absolute;
+  display  : none;
+  z-index  : -1;
+  left     : 0;
+  top      : 0;
+}
 .zcarousel-caption {
   position   : absolute;
   left       : 0;
@@ -11,9 +18,10 @@
   background : #000;
   background : rgba(0,0,0,0.75);
   overflow   : hidden;
-  padding    : 10px 15px;
+  padding    : 6px 15px;
   opacity    : 0;
   height     : 0;
+  line-height: 18px;
 }
 .zcarousel-nav {
   position : absolute;
