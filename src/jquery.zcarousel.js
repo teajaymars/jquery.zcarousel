@@ -13,7 +13,7 @@
     [
       { caption: 'Here is the first image.',         
         url: 'http://somewhere.com/image1.jpg', 
-        offset: '10px' 
+        offset: '10' 
       },
       { caption: 'Second image now appearing here.', 
         url: 'http://somewhere.com/image2.jpg', 
@@ -25,32 +25,22 @@
 jQuery.fn.zcarousel = function(dataArray) {
   var spinner_settings = {
     lines: 13, // The number of lines to draw
-    length: 7, // The length of each line
     width: 4, // The line thickness
-    radius: 10, // The radius of the inner circle
-    rotate: 0, // The rotation offset
-    color: '#000', // #rgb or #rrggbb
-    speed: 1, // Rounds per second
     trail: 60, // Afterglow percentage
     shadow: false, // Whether to render a shadow
-    hwaccel: false, // Whether to use hardware acceleration
-    className: 'spinner', // The CSS class to assign to the spinner
-    zIndex: 2e9, // The z-index (defaults to 2000000000)
-    top: 'auto', // Top position relative to parent in px
-    left: 'auto' // Left position relative to parent in px
   };
 
   // Build the DOM
   var carousel = this;
-  carousel.addClass('zcarousel-main');
+  carousel.addClass('zcarousel');
   var linkPrev = $('<a href="#" class="zcarousel-nav zcarousel-nav-left" />').html('‹').appendTo(carousel);
   var linkNext = $('<a href="#" class="zcarousel-nav zcarousel-nav-right"/>').html('›').appendTo(carousel);
   var spinner = null;
   var captionBox = $('<div class="zcarousel-caption"/>').appendTo(carousel);
 
   // Called when an image has downloaded
-  function imgLoaded(obj) {
-    var img = obj.domElement;
+  function prepareImage(obj) {
+    var img = obj.existing;
 
     // Set the aspect ratio
     var w = img.width();
@@ -89,9 +79,16 @@ jQuery.fn.zcarousel = function(dataArray) {
   // Set the carousel state
   function navigateToImage(obj) {
     var oldCaption = captionBox.find('div');
-    var caption = $('<div/>').html(obj.caption).appendTo(captionBox);
-    var targetHeight = caption.height();
-    caption.hide();
+    var caption = null;
+    var targetHeight = 0;
+    var targetOpacity = 0;
+    if (obj.caption) {
+        // If a caption has been supplied...
+        caption = $('<div/>').html(obj.caption).appendTo(captionBox);
+        targetHeight = caption.height();
+        targetOpacity = 1;
+        caption.hide();
+    }
 
     // Cross fade the caption
     var fadeSpeed = 100;
@@ -102,30 +99,31 @@ jQuery.fn.zcarousel = function(dataArray) {
           'linear', 
           function() { 
             oldCaption.remove(); 
-            caption.fadeIn( fadeSpeed ) 
+            if (caption) caption.fadeIn( fadeSpeed ) 
           } 
       );
     }
     else {
-      caption.fadeIn( fadeSpeed );
+      if (caption) caption.fadeIn( fadeSpeed );
     }
     // Animate the box height
     captionBox.stop().animate( 
-        { 'opacity': 1, 'height':targetHeight }, 
+        { 'opacity': targetOpacity, 'height':targetHeight }, 
         heightSpeed 
     );
 
     // Images might be cached in the document
-    if (obj.domElement) {
-      fadeToImage(obj.domElement);
+    if (obj.existing) {
+      fadeToImage(obj.existing);
     }
     else {
       if (!spinner) spinner = new Spinner(spinner_settings).spin(carousel[0]);
       // Add the new image
       var img = $('<img class="zcarousel-image"/>');
-      img.load( function(){imgLoaded(obj)} );
+      // Hook before setting src="..." to avoid an ugly race condition
+      img.load( function(){prepareImage(obj)} );
       img.attr('src',obj.url).appendTo(carousel);
-      obj.domElement = img;
+      obj.existing = img;
     }
   }
 
