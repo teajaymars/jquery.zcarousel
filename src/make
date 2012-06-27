@@ -1,12 +1,7 @@
 #!/bin/bash
 
-INFILE=$1
-
-if [ ! $INFILE ]
-then
-  echo Usage: $0 path/to/jquery.zcarousel.js
-  exit -1
-fi
+CLOSURE=~/util/closure/compiler.jar
+INFILE=src/jquery.zcarousel.js
 
 MINFILE=${INFILE/.js/.min.js}
 CSSFILE=${INFILE/.js/.css}
@@ -18,7 +13,7 @@ stat $CSSFILE >/dev/null || exit
 stat $SPINFILE >/dev/null || exit
 
 echo Writing $MINFILE...
-java -jar ~/util/closure/compiler.jar $INFILE  >$MINFILE
+java -jar $CLOSURE $INFILE  >$MINFILE
 
 OUTFILE1=jquery.zcarousel.zip
 OUTFILE2=jquery.zcarousel.min.zip
