@@ -8,70 +8,59 @@
 
   <link rel="stylesheet" href="jquery.zcarousel.css"/>
 	<!-- Google hosted jQuery core -->
-	<script src="http://www.google.com/jsapi"></script>
-	<script>google.load("jquery", "1");</script>
+	<!--script src="http://www.google.com/jsapi"></script>
+	<script>google.load("jquery", "1");</script-->
 	
 	<script src="spin.min.js"></script>
+	<script src="jquery-1.7.2.js"></script>
 	<script src="jquery.zcarousel.js"></script>
-    <style type="text/css">
-      body {
-        font-family: Helvetica Neue, Helvetica; 
-        font-size: 13px;
-      }
-      pre {
-          background: #f0f0f0;
-          border: 1px solid #ccc;
-          padding: 8px;
-          margin-bottom: 10px;
-          display: inline-block;
-          zoom: 1;
-          *display: inline;
-      }
-    </style>
-	
+    <link rel="stylesheet" href="demo.css"/>
 </head>
 <body>
-  <h3>zcarousel demo</h3>
+  <h1>jquery.zcarousel</h1>
   <div id="zcarousel" style="width: 940px; height: 250px; "></div>
   <script>
       $('#zcarousel').zcarousel([
-      {'url'      : 'http://assets.okfn.org/web/carousel/okfest.jpg',
-        'caption' : '17<sup>th</sup> - 22<sup>nd</sup> September 2012: We are hosting the world\'s first <a href="http://okfestival.org">OKFestival</a> in Helsinki, Finland. The theme is Open Knowledge in Action, looking at the value of opening up knowledge, the ecosystems of organisations that can benefit from such sharing, and the impacts that transparency can have in our societies.'
+      {'url'      : 'img/beanbags.jpg',
+        'caption' : 'These people are smiling despite being caught stealing beanbags. They each received a jail term of four years in an unsanitary Welsh prison.'
+      } 
+      ,{'url'      : 'img/okfest.jpg',
+//        'caption' : '17<sup>th</sup> - 22<sup>nd</sup> September 2012: We are hosting the world\'s first <a href="http://okfestival.org">OKFestival</a> in Helsinki, Finland. The theme is Open Knowledge in Action, looking at the value of opening up knowledge, the ecosystems of organisations that can benefit from such sharing, and the impacts that transparency can have in our societies.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/ogdcamp.jpg',
+      ,{'url'      : 'img/ogdcamp.jpg',
         'caption' : 'Our events unite people from a variety of backgrounds. Last October, 400 people from over 40 nations met in Warsaw for Open Government Data Camp.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/ckan.jpg',
+      ,{'url'      : 'img/ckan.jpg',
         'caption' : 'Our tools help people work with data. <a href="http://ckan.org">CKAN</a> is an open source data portal that powering sites such as <a href="http://data.gov.uk">data.gov.uk</a>.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/ddjbook.jpg',
+      ,{'url'      : 'img/ddjbook.jpg',
         'caption' : 'The <a href="http://datajournalismhandbook.org/">Data Journalism Handbook</a> is a free, open source reference book for anyone interested in the emerging field of data journalism. It was born at a 48-hour workshop at <a href="http://datadrivenjournalism.net/news_and_analysis/hacks_and_hackers_gather_to_write_the_first_data_journalism_handbook">MozFest 2011</a>, and it subsequently spilled over into an international effort involving dozens of contributers.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/openspending.png',
+      ,{'url'      : 'img/openspending.png',
         'caption' : 'The aim of <a href="http://openspending.org">OpenSpending</a> is to track every government financial transaction across the world and present it in useful and engaging forms for everyone from a school-child to a data geek.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/publicdomainreview.jpg',
+      ,{'url'      : 'img/publicdomainreview.jpg',
         'caption' : 'Our projects enrich openness and access. The <a href="http://publicdomainreview.org/">Public Domain Review</a> showcases works as they enter the public domain, such as this map from Geographicus.'
       }
-      ,{'url'      : 'http://assets.okfn.org/web/carousel/workinggroups.jpg',
+      ,{'url'      : 'img/workinggroups.jpg',
         'caption' : 'Members of our <a href="http://okfn.org/wg/">working groups</a> meet online and in-person to focus on areas of open knowledge such as economics, science, government data, bibliographic data, the humanities and many more.'
       }
-/*      ,{'url'      : 'http://assets.okfn.org/web/carousel/beanbags.jpg',
-        'caption' : '[[ Some guys with beanbags. Great photo, no obvious caption springs to mind. ]]'
-      } */
       ]);
     </script>
 
-  <h3>Get the code</h3>
-  <ul>
-    <li><b><a href="https://raw.github.com/zephod/jquery.zcarousel/gh-pages/jquery.zcarousel.js">jquery.zcarousel.js</a></b></li>
-    <li><b><a href="https://raw.github.com/zephod/jquery.zcarousel/gh-pages/jquery.zcarousel.min.js">jquery.zcarousel.min.js</a></b></li>
-    <li>View the <a href="http://github.com/zephod/jquery.zcarousel">project on GitHub</a></li>
-  </ul>
+  <div id="get-the-code">
+    <h3>Get the code</h3>
+    <ul>
+      <li><b><a href="https://raw.github.com/zephod/jquery.zcarousel/gh-pages/jquery.zcarousel.js">jquery.zcarousel.js</a></b> (for development)</li>
+      <li><b><a href="https://raw.github.com/zephod/jquery.zcarousel/gh-pages/jquery.zcarousel.min.js">jquery.zcarousel.min.js</a></b> (minified; for production)</li>
+      <li>View the <a href="http://github.com/zephod/jquery.zcarousel">project on GitHub</a></li>
+    </ul>
+  </div>
 
 
-  <h3>Usage</h3>
-  <pre>
+  <div id="usage">
+    <h3>Usage</h3>
+    <pre>
 $('#carousel-div').zcarousel(
 [
   { caption: 'Here is the first image.',         
@@ -83,6 +72,8 @@ $('#carousel-div').zcarousel(
     offset: '0'    
   }
 ] );
-</pre>
+    </pre>
+  </div>
 </body>
 </html>
+o
