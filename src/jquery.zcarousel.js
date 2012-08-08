@@ -9,7 +9,7 @@
 
    usage
    =====
-   $('#carousel-div').zcarousel(
+   jQuery('#carousel-div').zcarousel(
     [
       { caption: 'Here is the first image.',         
         url: 'http://somewhere.com/image1.jpg', 
@@ -27,16 +27,16 @@ jQuery.fn.zcarousel = function(dataArray) {
     lines: 13, // The number of lines to draw
     width: 4, // The line thickness
     trail: 60, // Afterglow percentage
-    shadow: false, // Whether to render a shadow
+    shadow: false // Whether to render a shadow
   };
 
   // Build the DOM
   var carousel = this;
   carousel.addClass('zcarousel');
-  var linkPrev = $('<a href="#" class="zcarousel-nav zcarousel-nav-left" />').html('‹').appendTo(carousel);
-  var linkNext = $('<a href="#" class="zcarousel-nav zcarousel-nav-right"/>').html('›').appendTo(carousel);
+  var linkPrev = jQuery('<a href="#" class="zcarousel-nav zcarousel-nav-left" />').html('‹').appendTo(carousel);
+  var linkNext = jQuery('<a href="#" class="zcarousel-nav zcarousel-nav-right"/>').html('›').appendTo(carousel);
   var spinner = null;
-  var captionBox = $('<div class="zcarousel-caption"/>').appendTo(carousel);
+  var captionBox = jQuery('<div class="zcarousel-caption"/>').appendTo(carousel);
 
   // Called when an image has downloaded
   function prepareImage(obj) {
@@ -72,7 +72,7 @@ jQuery.fn.zcarousel = function(dataArray) {
     spinner_settings.color = '#fff';
     // Trigger animations
     img.fadeIn('fast', function() {
-      $('.zcarousel-image').not(img).hide();
+      jQuery('.zcarousel-image').not(img).hide();
     });
   };
 
@@ -84,7 +84,7 @@ jQuery.fn.zcarousel = function(dataArray) {
     var targetOpacity = 0;
     if (obj.caption) {
         // If a caption has been supplied...
-        caption = $('<div/>').html(obj.caption).appendTo(captionBox);
+        caption = jQuery('<div/>').html(obj.caption).appendTo(captionBox);
         targetHeight = caption.height();
         targetOpacity = 1;
         caption.hide();
@@ -119,7 +119,7 @@ jQuery.fn.zcarousel = function(dataArray) {
     else {
       if (!spinner) spinner = new Spinner(spinner_settings).spin(carousel[0]);
       // Add the new image
-      var img = $('<img class="zcarousel-image"/>');
+      var img = jQuery('<img class="zcarousel-image"/>');
       // Hook before setting src="..." to avoid an ugly race condition
       img.load( function(){prepareImage(obj)} );
       img.attr('src',obj.url).appendTo(carousel);
